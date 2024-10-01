@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: 'api-for-template-angular'
           slot-name: 'Production'
-          package: '*.jar'
+          package: 'api-for-template-angular-0.0.1-SNAPSHOT.jar'
           
