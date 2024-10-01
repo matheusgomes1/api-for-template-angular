@@ -18,7 +18,7 @@ public class ApiForTemplateAngularApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("*");
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200", "https://proud-meadow-039c7520f.5.azurestaticapps.net/").allowedMethods("*");
 			}
 		};
 	}
