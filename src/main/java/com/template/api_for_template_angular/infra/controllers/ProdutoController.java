@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("produto")
@@ -25,14 +24,14 @@ public class ProdutoController {
     IProdutoService produtoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Boolean> cadastrar(@RequestBody ProdutoInDto dto) {
-        produtoService.cadastrar(dto);
+    public ResponseEntity<ProdutoOutDto> cadastrar(@RequestBody ProdutoInDto dto) {
+        var retorno = produtoService.cadastrar(dto);
         
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(retorno);
     }
 
     @GetMapping("/obter/{id}")
-    public ResponseEntity<ProdutoOutDto> obterPorId(@PathVariable Long id) {
+    public ResponseEntity<ProdutoOutDto> obterPorId(@PathVariable("id") Long id) {
         var produtoDto = produtoService.obterPorId(id);
 
         return ResponseEntity.ok(produtoDto);
@@ -47,13 +46,13 @@ public class ProdutoController {
     }  
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Boolean> atualizar(@PathVariable Long id, @RequestBody ProdutoInDto dto) {
-        produtoService.atualizar(id, dto);
-        return ResponseEntity.ok(true);
+    public ResponseEntity<ProdutoOutDto> atualizar(@PathVariable("id") Long id, @RequestBody ProdutoInDto dto) {
+        var retorno = produtoService.atualizar(id, dto);
+        return ResponseEntity.ok(retorno);
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity deletar(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deletar(@PathVariable("id") Long id) {
         produtoService.deletar(id);
         return ResponseEntity.ok(true);
     }

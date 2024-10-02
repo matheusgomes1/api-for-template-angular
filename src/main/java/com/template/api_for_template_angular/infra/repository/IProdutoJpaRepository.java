@@ -19,6 +19,6 @@ public interface IProdutoJpaRepository extends JpaRepository<Produto, Long> {
     @Query(value = "SELECT new com.template.api_for_template_angular.domain.dtos.out.ProdutoOutDto(p.produtoId, p.nome, p.descricao, p.valor, p.dataInclusao) " +
                 "FROM Produto p " +
                 PARAMETROS
-        , countQuery = "SELECT COUNT(*) FROM Produto p " + PARAMETROS)
+            ,countQuery = "SELECT COUNT(*) FROM Produto p " + PARAMETROS)
     public Page<ProdutoOutDto> listar(@Param("filtro") ProdutoFiltroDto filtro, Pageable pageable);
 }

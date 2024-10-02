@@ -11,9 +11,9 @@ public interface IProdutoService {
 
     Page<ProdutoOutDto> listar(ProdutoFiltroDto dto);
 
-    void cadastrar(ProdutoInDto dto);
+    ProdutoOutDto cadastrar(ProdutoInDto dto);
 
-    void atualizar(Long id, ProdutoInDto dto);
+    ProdutoOutDto atualizar(Long id, ProdutoInDto dto);
 
     void deletar(Long id);
 }

@@ -1,7 +1,5 @@
 package com.template.api_for_template_angular.domain.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,14 +33,14 @@ public class ProdutoService implements IProdutoService {
     }
 
     @Override
-    public void cadastrar(ProdutoInDto dto) {
-        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao);
+    public ProdutoOutDto cadastrar(ProdutoInDto dto) {
+        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao, null);
 
-        produtoJpaRepository.save(produto);
+        return new ProdutoOutDto(produtoJpaRepository.save(produto));
     }
 
     @Override
-    public void atualizar(Long id, ProdutoInDto dto) {
+    public ProdutoOutDto atualizar(Long id, ProdutoInDto dto) {
         var produtoOpt = produtoJpaRepository.findById(id);
         if (produtoOpt.isPresent()) {
             Produto produto = produtoOpt.get();
@@ -50,7 +48,7 @@ public class ProdutoService implements IProdutoService {
             produto.setDescricao(dto.descricao);
             produto.setValor(dto.valor);
             produto.setDataInclusao(dto.dataInclusao);  // Caso queira alterar a data de inclusão também
-            produtoJpaRepository.save(produto);  // Atualiza o produto
+            return new ProdutoOutDto(produtoJpaRepository.save(produto));  // Atualiza o produto
         } else {
             throw new IllegalArgumentException("Produto com ID " + id + " não encontrado.");
         }

@@ -1,17 +1,14 @@
 package com.template.api_for_template_angular.domain.dtos.in;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoInDto {
+public class ArquivoInDto {
+    public Long arquivoId;
+    public String base64;
+    public String mimeType;
+    public String name;
     public Long produtoId;
-    public String nome;
-    public String descricao;
-    public BigDecimal valor;
-    public Date dataInclusao;
 }
