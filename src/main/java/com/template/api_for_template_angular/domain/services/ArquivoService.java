@@ -11,6 +11,7 @@ import com.template.api_for_template_angular.domain.dtos.out.ArquivoOutDto;
 import com.template.api_for_template_angular.domain.entities.Arquivo;
 import com.template.api_for_template_angular.infra.repository.IArquivoJpaRepository;
 import com.template.api_for_template_angular.infra.repository.IProdutoJpaRepository;
+import com.template.api_for_template_angular.infra.utils.Base64Utils;
 
 @Service
 public class ArquivoService implements IArquivoService {
@@ -22,6 +23,12 @@ public class ArquivoService implements IArquivoService {
 
     @Override
     public ArquivoOutDto cadastrar(ArquivoInDto dto) {
+        int arquivoSize = Base64Utils.calculateBase64SizeInBytes(dto.base64);
+
+        //4MB = 4*1024*1024
+        if (arquivoSize > 4*1024*1024)
+            throw new IllegalArgumentException("Tamanho do arquivo maior que 4MB");
+
         var produto = produtoJpaRepository.findById(dto.produtoId);
 
         if (!produto.isPresent()) {
