@@ -34,7 +34,7 @@ public class ProdutoService implements IProdutoService {
 
     @Override
     public ProdutoOutDto cadastrar(ProdutoInDto dto) {
-        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao, null);
+        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao, null, null);
 
         return new ProdutoOutDto(produtoJpaRepository.save(produto));
     }

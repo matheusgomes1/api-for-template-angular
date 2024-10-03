@@ -1,35 +1,34 @@
 package com.template.api_for_template_angular.domain.entities;
-import java.math.BigDecimal;
-import java.util.Date;
+
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Produto {
+public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long produtoId;
+    private Long categoriaId;
+
     private String nome;
-    private String descricao;
-    private BigDecimal valor;
-    private Date dataInclusao;
 
-    @OneToMany(mappedBy = "produto")
-    private List<Arquivo> arquivos;
-
-    @ManyToMany(mappedBy = "produtos")  
-    private List<Categoria> categorias;
+    @ManyToMany
+    @JoinTable(name = "produto_categoria",
+    joinColumns = @JoinColumn(name="categoriaId"),
+    inverseJoinColumns = @JoinColumn(name="produtoId"))
+    private List<Produto> produtos;
 }

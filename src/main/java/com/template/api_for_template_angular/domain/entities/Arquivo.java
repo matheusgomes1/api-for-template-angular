@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 public class Arquivo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long arquivoId;
 
     @ManyToOne
