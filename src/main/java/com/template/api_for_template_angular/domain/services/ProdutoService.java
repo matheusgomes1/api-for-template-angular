@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 import com.template.api_for_template_angular.domain.dtos.in.ProdutoFiltroDto;
 import com.template.api_for_template_angular.domain.dtos.in.ProdutoInDto;
 import com.template.api_for_template_angular.domain.dtos.out.ProdutoOutDto;
+import com.template.api_for_template_angular.domain.entities.Arquivo;
 import com.template.api_for_template_angular.domain.entities.Produto;
+import com.template.api_for_template_angular.infra.repository.IArquivoJpaRepository;
 import com.template.api_for_template_angular.infra.repository.IProdutoJpaRepository;
 
 @Service
 public class ProdutoService implements IProdutoService {
     @Autowired
     private IProdutoJpaRepository produtoJpaRepository;
+
+    @Autowired
+    private IArquivoJpaRepository arquivoJpaRepository;
 
     @Override
     public ProdutoOutDto obterPorId(Long id) {
@@ -57,6 +62,12 @@ public class ProdutoService implements IProdutoService {
     @Override
     public void deletar(Long id) {
         if (produtoJpaRepository.existsById(id)) {
+            var optProduto = produtoJpaRepository.findById(id);
+
+            for (Arquivo arquivo : optProduto.get().getArquivos()) {
+                arquivoJpaRepository.delete(arquivo);
+            }
+
             produtoJpaRepository.deleteById(id);
         } else {
             throw new IllegalArgumentException("Produto com ID " + id + " não encontrado.");
