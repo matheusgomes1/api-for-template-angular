@@ -37,7 +37,6 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoDto);
     }
     
-    
     @GetMapping("/listar")
     public ResponseEntity<Page<ProdutoOutDto>> listar(ProdutoFiltroDto filtro) {
         var listar = produtoService.listar(filtro);

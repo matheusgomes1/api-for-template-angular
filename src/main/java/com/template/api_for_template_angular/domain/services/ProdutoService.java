@@ -31,8 +31,11 @@ public class ProdutoService implements IProdutoService {
 
     @Override
     public Page<ProdutoOutDto> listar(ProdutoFiltroDto dto) {
-        var pageRequest = PageRequest.of(dto.pagina, dto.tamanhoPagina, 
-            Sort.by(dto.ordenadoPor == null || dto.ordenadoPor.isBlank() ? "produtoId" : dto.ordenadoPor));
+        var sort = Sort.by(dto.ordenadoPor == null || dto.ordenadoPor.isBlank() ? "produtoId" : dto.ordenadoPor);
+        sort = (dto.decrescente != null && dto.decrescente == true) ? sort.descending() : sort.ascending();
+
+        var pageRequest = PageRequest.of(dto.pagina, dto.tamanhoPagina, sort);
+        
 
         return produtoJpaRepository.listar(dto, pageRequest);
     }
