@@ -11,6 +11,7 @@ import com.template.api_for_template_angular.domain.dtos.in.ProdutoInDto;
 import com.template.api_for_template_angular.domain.dtos.out.ProdutoOutDto;
 import com.template.api_for_template_angular.domain.entities.Arquivo;
 import com.template.api_for_template_angular.domain.entities.Produto;
+import com.template.api_for_template_angular.domain.specifications.ProdutoSpecification;
 import com.template.api_for_template_angular.infra.repository.IArquivoJpaRepository;
 import com.template.api_for_template_angular.infra.repository.IProdutoJpaRepository;
 
@@ -35,9 +36,15 @@ public class ProdutoService implements IProdutoService {
         sort = (dto.decrescente != null && dto.decrescente == true) ? sort.descending() : sort.ascending();
 
         var pageRequest = PageRequest.of(dto.pagina, dto.tamanhoPagina, sort);
-        
 
-        return produtoJpaRepository.listar(dto, pageRequest);
+        ProdutoSpecification specification = new ProdutoSpecification(dto);
+        Page<Produto> produtos = produtoJpaRepository.findAll(specification, pageRequest);
+
+        return produtos.map(produto -> new ProdutoOutDto(produto.getProdutoId(), 
+                                                        produto.getNome(), 
+                                                        produto.getDescricao(), 
+                                                        produto.getValor(), 
+                                                        produto.getDataInclusao()));
     }
 
     @Override
