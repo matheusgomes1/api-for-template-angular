@@ -27,7 +27,7 @@ public class ProdutoService implements IProdutoService {
     public ProdutoOutDto obterPorId(Long id) {
         var produto = produtoJpaRepository.getReferenceById(id);
 
-        return new ProdutoOutDto(produto.getProdutoId(), produto.getNome(), produto.getDescricao(), produto.getValor(), produto.getDataInclusao());
+        return new ProdutoOutDto(produto.getProdutoId(), produto.getNome(), produto.getDescricao(), produto.getValor(), produto.getDataInclusao(), produto.getSituacao());
     }
 
     @Override
@@ -44,12 +44,13 @@ public class ProdutoService implements IProdutoService {
                                                         produto.getNome(), 
                                                         produto.getDescricao(), 
                                                         produto.getValor(), 
-                                                        produto.getDataInclusao()));
+                                                        produto.getDataInclusao(),
+                                                        produto.getSituacao()));
     }
 
     @Override
     public ProdutoOutDto cadastrar(ProdutoInDto dto) {
-        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao, null, null);
+        var produto = new Produto(null, dto.nome, dto.descricao, dto.valor, dto.dataInclusao, dto.situacao, null, null);
 
         return new ProdutoOutDto(produtoJpaRepository.save(produto));
     }
@@ -62,7 +63,8 @@ public class ProdutoService implements IProdutoService {
             produto.setNome(dto.nome);
             produto.setDescricao(dto.descricao);
             produto.setValor(dto.valor);
-            produto.setDataInclusao(dto.dataInclusao);  // Caso queira alterar a data de inclusão também
+            produto.setDataInclusao(dto.dataInclusao);
+            produto.setSituacao(dto.situacao);
             return new ProdutoOutDto(produtoJpaRepository.save(produto));  // Atualiza o produto
         } else {
             throw new IllegalArgumentException("Produto com ID " + id + " não encontrado.");
