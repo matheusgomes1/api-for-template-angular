@@ -90,3 +90,11 @@ INSERT INTO CATEGORIA (nome) VALUES
 ( 'Papelaria e Escritório'),
 ( 'Bazar e Utensílios'),
 ( 'Ração e Pet Food');
+
+INSERT INTO USUARIO (
+    usuario_id, ativo, codigo_recuperacao, email, login, nome, permissao, senha
+) VALUES (
+    '29d02884-e9ba-47b8-983c-d525a173a376', TRUE, null, 'usuario@email.com', 'admin', 'admin', 0, '$2a$10$ZfaPvCtqVGj1doxAALKn2O9QLcVVhGpSqLskEA9WS6iSUYUnsuEpK'
+), (
+    '30d02884-e9ba-47b8-983c-d525a173a378', TRUE, null, 'usuario2@email.com', 'user', 'user', 1, '$2a$10$ZfaPvCtqVGj1doxAALKn2O9QLcVVhGpSqLskEA9WS6iSUYUnsuEpK'
+);
