@@ -58,7 +58,8 @@ public class TokenService {
                     .withIssuer(issuer)
                     .build()
                     .verify(tokenJWT)
-                    .getClaims().get("permissao");
+                    .getClaims()
+                    .get("permissao");
         } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token JWT inválido ou expirado!");
         }
